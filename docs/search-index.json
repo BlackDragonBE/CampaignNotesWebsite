@@ -1,0 +1,84 @@
+[
+  {
+    "title": "1",
+    "path": "1_SessionNotes/1.html",
+    "category": "Session Notes",
+    "content": "This is the first session note!",
+    "frontmatter": {
+      "sessionDate": "2030-01-31",
+      "startLocation": "Location Name"
+    }
+  },
+  {
+    "title": "My Location",
+    "path": "2_Locations/My Location.html",
+    "category": "Locations",
+    "content": "Example location",
+    "frontmatter": {}
+  },
+  {
+    "title": "Barovia Map",
+    "path": "2_Locations/_Map.html",
+    "category": "Locations",
+    "content": "Interactive map of Barovia with locations and markers",
+    "frontmatter": {
+      "obsidianUIMode": "preview",
+      "aliases": [
+        "map",
+        "kaart"
+      ],
+      "obsidianEditingMode": "source"
+    },
+    "aliases": [
+      "map",
+      "kaart"
+    ]
+  },
+  {
+    "title": "Example character",
+    "path": "3_Characters/Example character.html",
+    "category": "Characters",
+    "content": "This is a character",
+    "frontmatter": {
+      "npcProperties": [
+        "Faction"
+      ],
+      "npcStatus": "Alive"
+    }
+  },
+  {
+    "title": "Example Item",
+    "path": "4_Items/Example Item.html",
+    "category": "Items",
+    "content": "Item description",
+    "frontmatter": {}
+  },
+  {
+    "title": "Example Concept",
+    "path": "5_Concepts/Example Concept.html",
+    "category": "Concepts",
+    "content": "Example!",
+    "frontmatter": {}
+  },
+  {
+    "title": "Finished quest",
+    "path": "7_Quests/Done/Finished quest.html",
+    "category": "Quests",
+    "content": "Example finished quest",
+    "frontmatter": {}
+  },
+  {
+    "title": "Inactive Quest",
+    "path": "7_Quests/Inactive/Inactive Quest.html",
+    "category": "Quests",
+    "content": "Example quest",
+    "frontmatter": {}
+  },
+  {
+    "title": "Custom Example",
+    "path": "8_Custom/Custom Example.html",
+    "category": "Other",
+    "content": "This note is in the Custom category. Use it to include extra backgrounds, classes, etc.",
+    "frontmatter": {}
+  }
+]

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barovia Map - My Campaign Name</title>
+    <link rel="preload" href="../images/background.jpeg" as="image">
+    <style>
+        body { 
+            margin: 0; 
+            background: #0a0a0b; 
+            color: #ffffff; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', roboto, sans-serif;
+            opacity: 0;
+            transition: opacity 0.1s ease-in;
+        }
+        body.loaded { opacity: 1; }
+    </style>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <ul>
+                <li><a href="../1_SessionNotes/index.html">Session Notes</a></li>
+                <li><a href="../2_Locations/index.html">Locations</a></li>
+                <li><a href="../3_Characters/index.html">Characters</a></li>
+                <li><a href="../4_Items/index.html">Items</a></li>
+                <li><a href="../5_Concepts/index.html">Concepts</a></li>
+                <li><a href="../7_Quests/index.html">Quests</a></li>
+                <li><a href="../8_Custom/index.html">Custom</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <article>
+            <h1>Barovia Map</h1>
+            <div class="note-properties">
+        <ul class="properties-list">
+            <li><span class="property-key">ObsidianUIMode:</span> <span class="property-value">preview</span></li>
+<li><span class="property-key">Aliases:</span> <span class="property-value">map, kaart</span></li>
+<li><span class="property-key">ObsidianEditingMode:</span> <span class="property-value">source</span></li>
+        </ul>
+    </div>
+            
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            main {
+                margin: 0;
+                padding: 0;
+            }
+            article {
+                margin: 0;
+                padding: 0;
+            }
+            h1 {
+                display: none;
+            }
+            .note-properties {
+                display: none;
+            }
+            #map {
+                width: 100vw;
+                height: calc(100vh - 50px);
+                border: none;
+                border-radius: 0;
+                position: fixed;
+                top: 50px;
+                left: 0;
+                z-index: 1;
+            }
+        </style>
+        
+        
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    
+    <script>
+        // Image dimensions
+        const imageWidth = 5025;
+        const imageHeight = 3225;
+        
+        // Create the map with CRS.Simple for pixel coordinates
+        const map = L.map('map', {
+            crs: L.CRS.Simple,
+            minZoom: -2,  // Allow zooming out further
+            maxZoom: 3    // Allow zooming in for detail
+        });
+        
+        // Define the image bounds in pixel coordinates
+        // [0, 0] is top-left, [imageHeight, imageWidth] is bottom-right
+        const bounds = [[0, 0], [imageHeight, imageWidth]];
+        
+        // Add the image overlay
+        L.imageOverlay('../images/Barovia.jpg', bounds).addTo(map);
+        
+        // Marker icons configuration
+        const markerIcons = {
+          "danger": {
+                    "iconName": "skull",
+                    "color": "#ff3838",
+                    "size": 6
+          },
+          "sleep": {
+                    "iconName": "bed",
+                    "color": "#7d7aff",
+                    "size": 6
+          },
+          "city": {
+                    "iconName": "city",
+                    "color": "#ffee80",
+                    "size": 6
+          },
+          "question": {
+                    "iconName": "question",
+                    "color": "#b861ff",
+                    "size": 6
+          },
+          "current": {
+                    "iconName": "star",
+                    "color": "#ff810a",
+                    "size": 6
+          },
+          "default": {
+                    "iconName": "map-marker",
+                    "color": "#dddddd",
+                    "size": 6
+          }
+};
+        
+        // Add custom CSS for marker icons first
+        const style = document.createElement('style');
+        style.textContent = `
+            .custom-div-icon {
+                background: none !important;
+                border: none !important;
+            }
+            .custom-div-icon i {
+                color: #dddddd;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+                font-size: 18px;
+            }
+            ` + Object.entries(markerIcons).map(([type, config]) => `
+            .marker-${type} i {
+                color: ${config.color} !important;
+            }
+            `).join('');
+        document.head.appendChild(style);
+        
+        // Function to create custom icons
+        function createCustomIcon(type) {
+            const iconConfig = markerIcons[type] || markerIcons['default'];
+            return L.divIcon({
+                html: '<i class="fas fa-' + iconConfig.iconName + '"></i>',
+                iconSize: [iconConfig.size, iconConfig.size],
+                className: 'custom-div-icon marker-' + type,
+                // Try centering the anchor point
+                iconAnchor: [iconConfig.size, -iconConfig.size]
+            });
+        }
+        
+        // Add markers with transformed coordinates
+        const markers = [
+          {
+                    "id": "ID_ab48cad988fb",
+                    "type": "city",
+                    "loc": [
+                              2148,
+                              2017
+                    ],
+                    "link": "Vallaki",
+                    "resolvedLinkPath": "../vallaki.html",
+                    "description": "",
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_8a980b49cbba",
+                    "type": "city",
+                    "loc": [
+                              1218.9999999999998,
+                              3984
+                    ],
+                    "link": "Barovia (dorp)",
+                    "resolvedLinkPath": "../barovia-(dorp).html",
+                    "description": null,
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_ca8bd9d839bb",
+                    "type": "default",
+                    "loc": [
+                              1187,
+                              3396.0000000000005
+                    ],
+                    "link": "Tser Pool",
+                    "resolvedLinkPath": "../tser-pool.html",
+                    "description": null,
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_189a1b8908fa",
+                    "type": "default",
+                    "loc": [
+                              2417,
+                              2168
+                    ],
+                    "link": "Lake Zarovich",
+                    "resolvedLinkPath": "../lake-zarovich.html",
+                    "description": null,
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_0a19198beafb",
+                    "type": "danger",
+                    "loc": [
+                              1578.9999999999998,
+                              3592
+                    ],
+                    "link": "Castle Ravenloft",
+                    "resolvedLinkPath": "../castle-ravenloft.html",
+                    "description": null,
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_8b7a4abacb8a",
+                    "type": "danger",
+                    "loc": [
+                              545,
+                              1730.5
+                    ],
+                    "link": "Amber Temple",
+                    "resolvedLinkPath": "../amber-temple.html",
+                    "description": null,
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_1be8aa29dada",
+                    "type": "danger",
+                    "loc": [
+                              2380.9999999999995,
+                              748
+                    ],
+                    "link": "Abdij van Markovia",
+                    "resolvedLinkPath": "../abdij-van-markovia.html",
+                    "description": null,
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_a94b4bf8f9ea",
+                    "type": "danger",
+                    "loc": [
+                              1887.4999999999998,
+                              2481.4985025864416
+                    ],
+                    "link": "Windmolen",
+                    "resolvedLinkPath": "../windmolen.html",
+                    "description": null,
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_69ab5878a86b",
+                    "type": "danger",
+                    "loc": [
+                              717.0000000000001,
+                              1498.0040838551593
+                    ],
+                    "link": "Tsolenka Pass",
+                    "resolvedLinkPath": "../tsolenka-pass.html",
+                    "description": null,
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_1a5a5be9e928",
+                    "type": "city",
+                    "loc": [
+                              2243,
+                              574
+                    ],
+                    "link": "Krezk",
+                    "resolvedLinkPath": "../krezk.html",
+                    "description": "",
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_9adb895859ea",
+                    "type": "danger",
+                    "loc": [
+                              1256.9999999999998,
+                              1670
+                    ],
+                    "link": "Hut van Baba Lysaga",
+                    "resolvedLinkPath": "../hut-van-baba-lysaga.html",
+                    "description": null,
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_aa5b4809ba08",
+                    "type": "danger",
+                    "loc": [
+                              1659.9999999999998,
+                              1665.4999999999998
+                    ],
+                    "link": "Argynvostholt",
+                    "resolvedLinkPath": "../argynvostholt.html",
+                    "description": null,
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_a9eb2b4a4aea",
+                    "type": "sleep",
+                    "loc": [
+                              1727.0000000000002,
+                              559
+                    ],
+                    "link": "Wijngaard",
+                    "resolvedLinkPath": "../wijngaard.html",
+                    "description": "",
+                    "tooltip": "always"
+          },
+          {
+                    "id": "ID_999b4889990b",
+                    "type": "sleep",
+                    "loc": [
+                              2084,
+                              1539
+                    ],
+                    "link": "Vistani Camp",
+                    "resolvedLinkPath": "../vistani-camp.html",
+                    "description": null,
+                    "tooltip": "always"
+          }
+];
+        
+        markers.forEach(markerData => {
+            const [lat, lng] = markerData.loc;
+            const marker = L.marker([lat, lng], {
+                icon: createCustomIcon(markerData.type)
+            }).addTo(map);
+            
+            // Add click handler for navigation if link is available
+            if (markerData.link) {
+                marker.on('click', function() {
+                    window.location.href = markerData.resolvedLinkPath;
+                });
+                
+                // Add popup with link info
+                const popupContent = markerData.description 
+                    ? '<strong>' + markerData.link + '</strong><br>' + markerData.description + '<br><em>Click marker to visit page</em>'
+                    : '<strong>' + markerData.link + '</strong><br><em>Click marker to visit page</em>';
+                marker.bindPopup(popupContent);
+            }
+            
+            // Handle tooltip display
+            if (markerData.tooltip === 'always' && markerData.link) {
+                marker.bindTooltip(markerData.link, { permanent: true });
+            } else if (markerData.tooltip === 'hover' && (markerData.link || markerData.description)) {
+                marker.bindTooltip(markerData.link || markerData.description);
+            }
+        });
+        
+        // Wait for the map container to be fully rendered, then fit bounds
+        setTimeout(() => {
+            map.fitBounds(bounds);
+        }, 100);
+    </script>
+        
+        <!-- Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+        </article>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+        });
+    </script>
+    <script>
+        // Live reload WebSocket connection
+        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            const ws = new WebSocket('ws://localhost:35729');
+            ws.onmessage = function(event) {
+                if (event.data === 'reload') {
+                    console.log('📄 Reloading page...');
+                    location.reload();
+                }
+            };
+            ws.onopen = function() {
+                console.log('🔌 Connected to live reload server');
+            };
+            ws.onclose = function() {
+                console.log('🔌 Disconnected from live reload server');
+            };
+        }
+    </script>
+    <script src="../search.js"></script>
+</body>
+</html>
