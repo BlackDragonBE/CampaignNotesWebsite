@@ -17,7 +17,7 @@ This project automatically generates a static website from your Obsidian vault c
 
 1. **Clone this repository**:
    ```bash
-   git clone <this-repo-url>
+   git clone [<this-repo-url>](https://github.com/BlackDragonBE/CampaignNotesWebsite)
    cd Website
    ```
 
