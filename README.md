@@ -1,6 +1,6 @@
 # D&D Campaign Website Generator
 
-This project automatically generates a static website from your Obsidian vault containing D&D campaign notes. It converts Obsidian-flavored markdown files with `[[internal links]]` into a structured HTML website with navigation and cross-references.
+This project automatically generates a static website from campaign notes stored in an Obsidian vault. See this repository for an example: https://github.com/BlackDragonBE/CampaignNotes
 
 ## Features
 
