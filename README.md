@@ -1,6 +1,7 @@
 # D&D Campaign Website Generator
 
-This project automatically generates a static website from campaign notes stored in an Obsidian vault. See this repository for an example: https://github.com/BlackDragonBE/CampaignNotes
+This project automatically generates a static website from campaign notes stored in an Obsidian vault. See this repository for an example: https://github.com/BlackDragonBE/CampaignNotes  
+See https://blackdragonbe.github.io/CampaignNotesWebsite to see this template in action.
 
 ## Features
 
